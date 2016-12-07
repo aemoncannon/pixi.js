@@ -14,9 +14,10 @@ export default class GraphicsData
      * @param {number} fillColor - the color of the fill
      * @param {number} fillAlpha - the alpha of the fill
      * @param {boolean} fill - whether or not the shape is filled with a colour
+     * @param {boolean} alphaBlendLine - whether the line should be alpha blended
      * @param {PIXI.Circle|PIXI.Rectangle|PIXI.Ellipse|PIXI.Polygon} shape - The shape object to draw.
      */
-    constructor(lineWidth, lineColor, lineAlpha, fillColor, fillAlpha, fill, shape)
+    constructor(lineWidth, lineColor, lineAlpha, fillColor, fillAlpha, fill, alphaBlendLine, shape)
     {
         /**
          * @member {number} the width of the line to draw
@@ -58,6 +59,8 @@ export default class GraphicsData
          */
         this.fill = fill;
 
+        this.alphaBlendLine = alphaBlendLine;
+
         this.holes = [];
 
         /**
@@ -85,6 +88,7 @@ export default class GraphicsData
             this.fillColor,
             this.fillAlpha,
             this.fill,
+            this.alphaBlendLine,
             this.shape
         );
     }

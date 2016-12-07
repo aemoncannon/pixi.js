@@ -90,20 +90,36 @@ export default function buildLine(graphicsData, webGLData)
     perpy *= width;
 
     // start
-    verts.push(
-        p1x - perpx,
-        p1y - perpy,
-        r, g, b, alpha
-    );
+    if (graphicsData.alphaBlendLine) {
+        verts.push(
+            p1x,
+            p1y,
+            r, g, b, alpha
+        );
+        verts.push(
+            p1x + perpx,
+            p1y + perpy,
+            r, g, b, 0
+        );
+    } else {
+        verts.push(
+            p1x - perpx,
+            p1y - perpy,
+            r, g, b, alpha
+        );
+        verts.push(
+            p1x + perpx,
+            p1y + perpy,
+            r, g, b, alpha
+        );
+    }
 
-    verts.push(
-        p1x + perpx,
-        p1y + perpy,
-        r, g, b, alpha
-    );
+
+
 
     for (let i = 1; i < length - 1; ++i)
     {
+
         p1x = points[(i - 1) * 2];
         p1y = points[((i - 1) * 2) + 1];
 
@@ -186,11 +202,19 @@ export default function buildLine(graphicsData, webGLData)
         }
         else
         {
-            verts.push(px, py);
-            verts.push(r, g, b, alpha);
-
-            verts.push(p2x - (px - p2x), p2y - (py - p2y));
-            verts.push(r, g, b, alpha);
+            if (graphicsData.alphaBlendLine) {
+                // Draw the line strictly outside of the fill, with a 1.0 -> 0.0
+                // alpha gradient (poor man's antialiasing).
+                verts.push(p2x, p2y);
+                verts.push(r, g, b, alpha);
+                verts.push(p2x - (px - p2x), p2y - (py - p2y));
+                verts.push(r, g, b, 0);
+            } else {
+                verts.push(px, py);
+                verts.push(r, g, b, alpha);
+                verts.push(p2x - (px - p2x), p2y - (py - p2y));
+                verts.push(r, g, b, alpha);
+            }
         }
     }
 
@@ -209,11 +233,17 @@ export default function buildLine(graphicsData, webGLData)
     perpx *= width;
     perpy *= width;
 
-    verts.push(p2x - perpx, p2y - perpy);
-    verts.push(r, g, b, alpha);
-
-    verts.push(p2x + perpx, p2y + perpy);
-    verts.push(r, g, b, alpha);
+    if (graphicsData.alphaBlendLine) {
+        verts.push(p2x, p2y);
+        verts.push(r, g, b, alpha);
+        verts.push(p2x + perpx, p2y + perpy);
+        verts.push(r, g, b, 0);
+    } else {
+        verts.push(p2x - perpx, p2y - perpy);
+        verts.push(r, g, b, alpha);
+        verts.push(p2x + perpx, p2y + perpy);
+        verts.push(r, g, b, alpha);
+    }
 
     indices.push(indexStart);
 

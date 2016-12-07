@@ -34,6 +34,14 @@ export default class Graphics extends Container
         super();
 
         /**
+         * Whether the line should have an alpha blend.
+         *
+         * @member {number}
+         * @default 1
+         */
+        this.alphaBlendLine = false;
+
+        /**
          * The alpha value used when filling the Graphics object.
          *
          * @member {number}
@@ -199,6 +207,7 @@ export default class Graphics extends Container
         clone.fillAlpha = this.fillAlpha;
         clone.lineWidth = this.lineWidth;
         clone.lineColor = this.lineColor;
+        clone.alphaBlendLine = this.alphaBlendLine;
         clone.tint = this.tint;
         clone.blendMode = this.blendMode;
         clone.isMask = this.isMask;
@@ -251,6 +260,7 @@ export default class Graphics extends Container
                 this.currentPath.lineWidth = this.lineWidth;
                 this.currentPath.lineColor = this.lineColor;
                 this.currentPath.lineAlpha = this.lineAlpha;
+                this.currentPath.alphaBlendLine = this.alphaBlendLine;
             }
         }
 
@@ -1026,6 +1036,7 @@ export default class Graphics extends Container
             this.fillColor,
             this.fillAlpha,
             this.filling,
+            this.alphaBlendLine,
             shape
         );
 
