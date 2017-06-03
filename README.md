@@ -178,7 +178,8 @@ $> npm run dist -- --exclude extras --exclude interaction
 You can also use the short-form `-e`:
 
 ```
-$> npm run dist -- -e extras -e interaction -e filters
+$> npm run dist
+$> cp dist/pixi.min.js ~/projects/toptable/app/assets/javascripts/pixi-min-4-dev.js
 ```
 
 ### How to generate the documentation ###
